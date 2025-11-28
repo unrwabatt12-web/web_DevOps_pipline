@@ -1,21 +1,30 @@
-pipeline { 
-    agent any  
-    stages { 
-        stage('Build') { 
-            steps { 
-                echo "Building the project..." 
-                sh 'ls -la'
-            } 
-        } 
-        stage('Test') { 
-            steps { 
-                echo "Running tests..." 
-            } 
-        } 
-        stage('Deploy') { 
-            steps { 
-                echo "Deploying..." 
-            } 
-        } 
-    } 
+pipeline {
+    agent any
+
+    stages {
+        stage('Install Packages') {
+            steps {
+                bat 'npm install'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'npm run build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat 'npm test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                bat 'echo Deploying...'
+            }
+        }
+    }
 }
+

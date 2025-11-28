@@ -1,12 +1,13 @@
 {
-  "name": "my_pipline_job",
+  "name": "my-pipline_job",
   "version": "1.0.0",
-  "main": "node.js",
+  "description": "Simple Node.js project for Jenkins pipeline",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "echo Build step completed",
+    "test": "echo Test step completed"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "author": "Augustin KALISA",
+  "license": "MIT"
 }
+

@@ -1,30 +1,35 @@
-pipeline {
-    agent any
+pipeline { 
+    agent any 
 
-    stages {
-        stage('Install Packages') {
-            steps {
-                bat 'npm install'
-            }
-        }
+    environment { 
+        DOCKER_IMAGE = 'augustinkalisa/node-web-app'
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credential'  
+    } 
 
-        stage('Build') {
-            steps {
-                bat 'npm run build'
-            }
-        }
+    stages { 
 
-        stage('Test') {
-            steps {
-                bat 'npm test'
-            }
-        }
+        stage('Checkout') { 
+            steps { 
+                checkout scm 
+            } 
+        } 
 
-        stage('Deploy') {
-            steps {
-                bat 'echo Deploying...'
-            }
-        }
-    }
+        stage('Build Docker Image') { 
+            steps { 
+                script { 
+                    dockerImage = docker.build("${DOCKER_IMAGE}:latest") 
+                } 
+            } 
+        } 
+
+        stage('Push to Docker Hub') { 
+            steps { 
+                script { 
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) { 
+                        dockerImage.push('latest') 
+                    } 
+                } 
+            } 
+        } 
+    } 
 }
-

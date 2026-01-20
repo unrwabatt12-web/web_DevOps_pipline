@@ -1,0 +1,20 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: appdb
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  web:
+    build: ./web       # <--- build from your Dockerfile
+    working_dir: /app
+    ports:
+      - "3003:3000"
+    depends_on:
+      - db
+    command: npm start
+
+volumes:
+  mysql_data:
